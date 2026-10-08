@@ -1,4 +1,12 @@
 package RizzleEscapeRoom;
+
+// -------------------------------------------------------------------------
+/**
+ *  Class that runs game
+ * 
+ *  @author maple
+ *  @version Oct 8, 2026
+ */
 public class Game
 {
     //~ Fields ................................................................

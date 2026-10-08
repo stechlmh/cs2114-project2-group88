@@ -2,9 +2,9 @@ package RizzleEscapeRoom;
 
 // -------------------------------------------------------------------------
 /**
- *  Tests Main method
+ *  Tests LinkedList class
  * 
- *  @author Maple
+ *  @author maple
  *  @version Oct 8, 2026
  */
 public class LinkedListTest extends student.TestCase

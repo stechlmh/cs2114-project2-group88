@@ -1,4 +1,5 @@
 package RizzleEscapeRoom;
+
 // -------------------------------------------------------------------------
 /**
  *  Class storing a fun fact

@@ -2,9 +2,9 @@ package RizzleEscapeRoom;
 
 // -------------------------------------------------------------------------
 /**
- *  Tests Main method
+ *  Tests Room method
  * 
- *  @author Maple
+ *  @author maple
  *  @version Oct 8, 2026
  */
 public class RoomTest extends student.TestCase
