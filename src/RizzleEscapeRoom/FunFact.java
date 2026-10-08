@@ -1,4 +1,11 @@
 package RizzleEscapeRoom;
+// -------------------------------------------------------------------------
+/**
+ *  Class storing a fun fact
+ * 
+ *  @author maple
+ *  @version Oct 8, 2026
+ */
 public class FunFact
 {
     //~ Fields ................................................................
