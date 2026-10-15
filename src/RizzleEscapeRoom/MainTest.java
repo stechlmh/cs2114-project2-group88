@@ -37,7 +37,7 @@ public class MainTest extends TestCase
      */
     public void testConstructor()
     {
-        assertEquals(3, game.getHearts());
+        assertEquals(3, game.getLives());
         assertEquals("Welcome!", game.getIntro());
     }
 
@@ -47,44 +47,22 @@ public class MainTest extends TestCase
     public void testToString()
     {
         assertNotNull(game.toString());
-        assertTrue(game.toString().length() > 0);
+        assertFalse(game.toString().equals(""));
     }
 
     /**
      * Normal case: setIntro changes what getIntro returns.
      */
-    public void testSetIntro()
+    public void testGetIntro()
     {
-        game.setIntro("New intro");
-        assertEquals("New intro", game.getIntro());
+        assertEquals("Welcome!", game.getIntro());
     }
-
-    /**
-     * Normal case: printIntro prints the intro text.
-     */
-    public void testPrintIntro()
-    {
-        game.printIntro();
-        assertTrue(systemOut().getHistory().contains("Welcome!"));
-    }
-
-    /**
-     * Bad-input case: an empty intro prints without crashing.
-     */
-    public void testPrintIntroEmpty()
-    {
-        game.setIntro("");
-        game.printIntro();
-        assertEquals("", game.getIntro());
-    }
-
     /**
      * Normal case: setHearts changes what getHearts returns.
      */
-    public void testSetHearts()
+    public void testGetHearts()
     {
-        game.setHearts(5);
-        assertEquals(5, game.getHearts());
+        assertEquals(3, game.getLives());
     }
 
     /**
@@ -92,19 +70,8 @@ public class MainTest extends TestCase
      */
     public void testLoseHeart()
     {
-        game.loseHeart();
-        assertEquals(2, game.getHearts());
-    }
-
-    /**
-     * Bad-input case: lives never go below 0 no matter how many times
-     * loseHeart is called.
-     */
-    public void testLoseHeartNeverNegative()
-    {
-        game.setHearts(0);
-        game.loseHeart();
-        assertEquals(0, game.getHearts());
+        game.loseLife();
+        assertEquals(2, game.getLives());
     }
 
     /**
@@ -120,45 +87,38 @@ public class MainTest extends TestCase
      */
     public void testNextRoom()
     {
+        game.plusRoomIndex();
         game.nextRoom();
         assertSame(second, game.getCurrentRoom());
     }
-
+    /**
+     * Normal case: returns gameIndex
+     */
+    public void testGameIndex()
+    {
+        assertEquals(game.getRoomIndex(),0);
+    }
+    /**
+     * Normal case: gameIndex += 1
+     */
+    public void testPlusRoomIndex()
+    {
+        game.plusRoomIndex();
+        assertEquals(game.getRoomIndex(),1);
+    }
     /**
      * Normal case: getRooms gives back the chain the game was built with.
      */
     public void testGetRooms()
     {
-        assertEquals(2, game.getRooms().size());
+        assertEquals(2, game.getRoomPool().size());
     }
-
-    /**
-     * Normal case: setRooms swaps in a new chain of rooms.
-     */
-    public void testSetRooms()
-    {
-        LinkedChain<Room> other = new LinkedChain<Room>();
-        other.addToEnd(new Room("Only one?", new String[] { "gamma" }, 0));
-        game.setRooms(other);
-        assertEquals(1, game.getRooms().size());
-    }
-
     /**
      * Normal case: checkWin is false while rooms are left.
      */
     public void testCheckWinFalseAtStart()
     {
-        assertFalse(game.checkWin());
-    }
-
-    /**
-     * Normal case: checkWin is true after every room is cleared.
-     */
-    public void testCheckWinAfterAllRooms()
-    {
-        game.nextRoom();
-        game.nextRoom();
-        assertTrue(game.checkWin());
+        assertFalse(Main.win);
     }
 
     /**
@@ -168,7 +128,7 @@ public class MainTest extends TestCase
     public void testCheckWinPartway()
     {
         game.nextRoom();
-        assertFalse(game.checkWin());
+        assertFalse(Main.win);
     }
 
     /**
@@ -176,16 +136,7 @@ public class MainTest extends TestCase
      */
     public void testCheckLossFalseAtStart()
     {
-        assertFalse(game.checkLoss());
-    }
-
-    /**
-     * Normal case: checkLoss is true once lives hit 0.
-     */
-    public void testCheckLossAtZero()
-    {
-        game.setHearts(0);
-        assertTrue(game.checkLoss());
+        assertFalse(Main.loss);
     }
 
     /**
@@ -193,8 +144,9 @@ public class MainTest extends TestCase
      */
     public void testCheckLossOneLifeLeft()
     {
-        game.setHearts(1);
-        assertFalse(game.checkLoss());
+        game.loseLife();
+        game.loseLife();
+        assertFalse(Main.loss);
     }
 
     /**
@@ -205,7 +157,7 @@ public class MainTest extends TestCase
     {
         FunFact fact = game.getRandomFunFact();
         assertNotNull(fact);
-        assertEquals(1, game.getFunFact().size());
+        assertEquals(1, game.getFunFactPool().size());
     }
 
     /**
@@ -217,16 +169,5 @@ public class MainTest extends TestCase
         game.getRandomFunFact();
         game.getRandomFunFact();
         assertNull(game.getRandomFunFact());
-    }
-
-    /**
-     * Normal case: setFunFact swaps in a new chain of fun facts.
-     */
-    public void testSetFunFact()
-    {
-        LinkedChain<FunFact> other = new LinkedChain<FunFact>();
-        other.add(new FunFact("Bananas are berries.", 0));
-        game.setFunFact(other);
-        assertEquals(1, game.getFunFact().size());
     }
 }

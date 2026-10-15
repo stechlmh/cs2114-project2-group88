@@ -66,12 +66,19 @@ public class Room
      * @return boolean
      */
     public boolean checkAnswer(String answer) {
+        if(answer == null) {
+            return false;
+        }
         boolean contains = false;
         for(int i = 0; i < answers.length; i += 1) {
-            if(answers[i].equals(answer)) {
+            if(answers[i].toUpperCase().equals(answer.toUpperCase())) {
                 contains = true;
             }
         }
         return contains;
+    }
+    
+    public String toString() {
+        return question;
     }
 }

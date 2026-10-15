@@ -127,13 +127,15 @@ public class Main
                 if(game.getRoomIndex() == game.getRoomPool().size()) {
                     win = true;
                 }
-                game.nextRoom();
-                if (random.nextInt(3) == 0)
-                {
-                    FunFact fact = game.getRandomFunFact();
-                    if (fact != null)
+                else {
+                    game.nextRoom();
+                    if (random.nextInt(3) == 0)
                     {
-                        System.out.println("Fun fact: " + fact);
+                        FunFact fact = game.getRandomFunFact();
+                        if (fact != null)
+                        {
+                            System.out.println("Fun fact: " + fact);
+                        }
                     }
                 }
             }
@@ -178,10 +180,14 @@ public class Main
             answer = answer.toLowerCase();
             if (answer.equals("yes") || answer.equals("y"))
             {
+                win = false;
+                loss = false;
                 return true;
             }
             if (answer.equals("no") || answer.equals("n"))
             {
+                win = false;
+                loss = false;
                 return false;
             }
             System.out.println("Please type yes or no.");
@@ -196,6 +202,7 @@ public class Main
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
+        
         boolean playing = true;
         while (playing)
         {
