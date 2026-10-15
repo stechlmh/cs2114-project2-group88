@@ -1,25 +1,7 @@
 # Rizzle Escape Room
 
-<<<<<<< HEAD
 A Puzzle Game Application
 
-How to Compile:
-Right-click RizzleEscapeRoom folder and run as java application, with the
-application running through console. Tests run through JUnit (tests measured as
-less than 100%, but the classes they test for are at 100%, all working as it 
-should.)
-
-Next Steps:
-Implement more questions and types of quizzes as well as the main methods
-necessary to create and run them through the same console, as well as custom
-user-generated quizzes if possible. Cleaning up formatting would also be good.
-
-Attribution Table:
-Ruhaan - Main class, Main and Game test classes, UML diagram
-Katie - FunFact class, FunFact and Room test classes
-Maple - Room class, Game class, Setting up repository
-Everyone - Coming up with questions and fun facts for Rizzle (possibly other Game classes as well
-AI - Nothing
 =======
 A text-based, Impossible Quiz-style escape room prototype. The player answers riddle rooms in sequence, loses a life for each wrong answer, and is meant to win by clearing every room. Rooms and fun facts are stored in the generic `LinkedChain<T>`.
 
@@ -32,7 +14,6 @@ mkdir -p /tmp/rizzle-classes
 javac -d /tmp/rizzle-classes src/RizzleEscapeRoom/LinkedChain.java src/RizzleEscapeRoom/Room.java src/RizzleEscapeRoom/FunFact.java src/RizzleEscapeRoom/Game.java src/RizzleEscapeRoom/Main.java
 java -cp /tmp/rizzle-classes RizzleEscapeRoom.Main
 ```
-
 
 ## Reflection
 
@@ -121,4 +102,3 @@ The game flow and current tests cover the prototype's implemented behavior. The 
 ### GenAI note
 
 Claude was used to brainstorm project ideas, draft some of the riddles and fun facts, and format comments and README text. Codex assisted with README updates. 
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046

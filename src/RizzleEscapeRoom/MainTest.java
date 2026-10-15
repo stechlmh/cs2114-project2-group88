@@ -26,14 +26,12 @@ public class MainTest extends TestCase
      */
     public void testGetUserInputTrims()
     {
-<<<<<<< HEAD
         assertEquals(3, game.getLives());
+        assertEquals(3, game.getHearts());
         assertEquals("Welcome!", game.getIntro());
-=======
         Scanner scanner = new Scanner("  answer  \n");
         assertEquals("answer", Main.getUserInput(scanner));
         scanner.close();
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
     }
 
     /**
@@ -41,31 +39,50 @@ public class MainTest extends TestCase
      */
     public void testGetUserInputBlankAndEof()
     {
-<<<<<<< HEAD
         assertNotNull(game.toString());
         assertFalse(game.toString().equals(""));
-=======
         Scanner scanner = new Scanner("   \n");
         assertNull(Main.getUserInput(scanner));
         scanner.close();
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
+        assertTrue(game.toString().length() > 0);
     }
 
     /**
      * Normal case: answering every room wins the game without advancing
      * beyond the last room.
      */
-<<<<<<< HEAD
-    public void testGetIntro()
+    public void testSetIntro()
     {
-        assertEquals("Welcome!", game.getIntro());
+        game.setIntro("New intro");
+        assertEquals("New intro", game.getIntro());
     }
+
+    /**
+     * Normal case: printIntro prints the intro text.
+     */
+    public void testPrintIntro()
+    {
+        game.printIntro();
+        assertTrue(systemOut().getHistory().contains("Welcome!"));
+    }
+
+    /**
+     * Bad-input case: an empty intro prints without crashing.
+     */
+    public void testPrintIntroEmpty()
+    {
+        game.setIntro("");
+        game.printIntro();
+        assertEquals("", game.getIntro());
+    }
+
     /**
      * Normal case: setHearts changes what getHearts returns.
      */
-    public void testGetHearts()
+    public void testSetHearts()
     {
-        assertEquals(3, game.getLives());
+        game.setHearts(5);
+        assertEquals(5, game.getHearts());
     }
 
     /**
@@ -73,8 +90,19 @@ public class MainTest extends TestCase
      */
     public void testLoseHeart()
     {
-        game.loseLife();
-        assertEquals(2, game.getLives());
+        game.loseHeart();
+        assertEquals(2, game.getHearts());
+    }
+
+    /**
+     * Bad-input case: lives never go below 0 no matter how many times
+     * loseHeart is called.
+     */
+    public void testLoseHeartNeverNegative()
+    {
+        game.setHearts(0);
+        game.loseHeart();
+        assertEquals(0, game.getHearts());
     }
 
     /**
@@ -90,38 +118,45 @@ public class MainTest extends TestCase
      */
     public void testNextRoom()
     {
-        game.plusRoomIndex();
         game.nextRoom();
         assertSame(second, game.getCurrentRoom());
     }
-    /**
-     * Normal case: returns gameIndex
-     */
-    public void testGameIndex()
-    {
-        assertEquals(game.getRoomIndex(),0);
-    }
-    /**
-     * Normal case: gameIndex += 1
-     */
-    public void testPlusRoomIndex()
-    {
-        game.plusRoomIndex();
-        assertEquals(game.getRoomIndex(),1);
-    }
+
     /**
      * Normal case: getRooms gives back the chain the game was built with.
      */
     public void testGetRooms()
     {
-        assertEquals(2, game.getRoomPool().size());
+        assertEquals(2, game.getRooms().size());
     }
+
+    /**
+     * Normal case: setRooms swaps in a new chain of rooms.
+     */
+    public void testSetRooms()
+    {
+        LinkedChain<Room> other = new LinkedChain<Room>();
+        other.addToEnd(new Room("Only one?", new String[] { "gamma" }, 0));
+        game.setRooms(other);
+        assertEquals(1, game.getRooms().size());
+    }
+
     /**
      * Normal case: checkWin is false while rooms are left.
      */
     public void testCheckWinFalseAtStart()
     {
-        assertFalse(Main.win);
+        assertFalse(game.checkWin());
+    }
+
+    /**
+     * Normal case: checkWin is true after every room is cleared.
+     */
+    public void testCheckWinAfterAllRooms()
+    {
+        game.nextRoom();
+        game.nextRoom();
+        assertTrue(game.checkWin());
     }
 
     /**
@@ -131,7 +166,7 @@ public class MainTest extends TestCase
     public void testCheckWinPartway()
     {
         game.nextRoom();
-        assertFalse(Main.win);
+        assertFalse(game.checkWin());
     }
 
     /**
@@ -150,6 +185,16 @@ public class MainTest extends TestCase
         assertFalse(game.checkLoss());
         assertEquals(3, game.getRoomIndex());
         scanner.close();
+        assertFalse(game.checkLoss());
+    }
+
+    /**
+     * Normal case: checkLoss is true once lives hit 0.
+     */
+    public void testCheckLossAtZero()
+    {
+        game.setHearts(0);
+        assertTrue(game.checkLoss());
     }
 
     /**
@@ -164,7 +209,6 @@ public class MainTest extends TestCase
         assertFalse(game.checkWin());
         assertEquals(0, game.getRoomIndex());
         scanner.close();
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
     }
 
     /**
@@ -172,15 +216,14 @@ public class MainTest extends TestCase
      */
     public void testAskReplayYes()
     {
-<<<<<<< HEAD
         game.loseLife();
         game.loseLife();
         assertFalse(Main.loss);
-=======
         Scanner scanner = new Scanner("YES\n");
         assertTrue(Main.askReplay(scanner));
         scanner.close();
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
+        game.setHearts(1);
+        assertFalse(game.checkLoss());
     }
 
     /**
@@ -189,10 +232,9 @@ public class MainTest extends TestCase
      */
     public void testAskReplayInvalidThenNo()
     {
-<<<<<<< HEAD
         FunFact fact = game.getRandomFunFact();
         assertNotNull(fact);
-        assertEquals(1, game.getFunFactPool().size());
+        assertEquals(1, game.getFunFact().size());
     }
 
     /**
@@ -204,10 +246,19 @@ public class MainTest extends TestCase
         game.getRandomFunFact();
         game.getRandomFunFact();
         assertNull(game.getRandomFunFact());
-=======
         Scanner scanner = new Scanner("maybe\nno\n");
         assertFalse(Main.askReplay(scanner));
         scanner.close();
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
+    }
+
+    /**
+     * Normal case: setFunFact swaps in a new chain of fun facts.
+     */
+    public void testSetFunFact()
+    {
+        LinkedChain<FunFact> other = new LinkedChain<FunFact>();
+        other.add(new FunFact("Bananas are berries.", 0));
+        game.setFunFact(other);
+        assertEquals(1, game.getFunFact().size());
     }
 }

@@ -68,5 +68,10 @@ public class LinkedListTest extends student.TestCase
         }
         assertNotNull(thrown);
     }
+    //~ Fields ................................................................
+
+    //~ Constructors ..........................................................
+
+    //~Public  Methods ........................................................
 
 }

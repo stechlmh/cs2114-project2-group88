@@ -119,22 +119,15 @@ public class Main
                 if (!game.checkWin()) {
                     game.nextRoom();
                 }
-<<<<<<< HEAD
                 else {
                     game.nextRoom();
-                    if (random.nextInt(3) == 0)
-=======
+                }
                 if (random.nextInt(3) == 0)
                 {
                     FunFact fact = game.getRandomFunFact();
                     if (fact != null)
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
                     {
-                        FunFact fact = game.getRandomFunFact();
-                        if (fact != null)
-                        {
-                            System.out.println("Fun fact: " + fact);
-                        }
+                        System.out.println("Fun fact: " + fact);
                     }
                 }
             }
@@ -176,14 +169,10 @@ public class Main
             answer = answer.toLowerCase();
             if (answer.equals("yes") || answer.equals("y"))
             {
-                win = false;
-                loss = false;
                 return true;
             }
             if (answer.equals("no") || answer.equals("n"))
             {
-                win = false;
-                loss = false;
                 return false;
             }
             System.out.println("Please type yes or no.");
@@ -198,7 +187,6 @@ public class Main
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
-        
         boolean playing = true;
         while (playing)
         {

@@ -10,7 +10,6 @@ package RizzleEscapeRoom;
 public class FunFact
 {
     private String fact;
-    @SuppressWarnings("unused")
     private int questionType;
     
     

@@ -68,7 +68,6 @@ public class Game
      */
     public Game(LinkedChain<Room> rooms, LinkedChain<FunFact> funFacts, String intro, int quizType, int lives) {
         roomPool = rooms;
-        currentRoom = roomPool.get(0);
         funFactPool = funFacts;
         this.intro = intro;
         this.quizType = quizType;
@@ -167,23 +166,14 @@ public class Game
     }
     // ----------------------------------------------------------
     /**
-     * Returns funFactPool
-     * @return LinkedChain<FunFact>
-     */
-    public LinkedChain<FunFact> getFunFactPool(){
-        return funFactPool;
-    }
-    // ----------------------------------------------------------
-    /**
      * Prints a randomFunFact from the list and removes it
      * @return FunFact
      */
     public FunFact getRandomFunFact() {
-<<<<<<< HEAD
         if(funFactPool.size() == 0) {
-=======
+            return null;
+        }
         if (funFactPool.isEmpty()) {
->>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
             return null;
         }
         int randInt = (int) (Math.random()*funFactPool.size());

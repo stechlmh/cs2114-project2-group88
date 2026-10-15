@@ -4,7 +4,7 @@ package RizzleEscapeRoom;
 /**
  * Tests Game class
  * 
- *  @author maple
+ *  @author Ruhaan
  *  @version Oct 15, 2026
  */
 public class GameTest extends student.TestCase
