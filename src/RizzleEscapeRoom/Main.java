@@ -17,7 +17,14 @@ public class Main
         "Welcome to Rizzle Escape Room!\n"
         + "Answer each riddle to move to the next room.\n"
         + "A wrong answer costs a life. Lose them all and you lose.";
-
+    /**
+     * Boolean of whether the player has won yet
+     */
+    public static boolean win = false;
+    /**
+     * Boolean of whether the player has lost yet
+     */
+    public static boolean loss = false;
     /**
      * Gets one line of input from the player. Blank lines are skipped and
      * the player is asked again, so the caller never has to handle empty
@@ -48,7 +55,7 @@ public class Main
         }
         return null;
     }
-
+    
     /**
      * Builds the chain of rooms the player will go through. More questions
      * get added here until there are 25-30.
@@ -101,8 +108,8 @@ public class Main
     public static void runGame(Game game, Scanner scanner)
     {
         Random random = new Random();
-        game.printIntro();
-        while (!game.checkWin() && !game.checkLoss())
+        System.out.print(game.getIntro());
+        while (!win && !loss)
         {
             Room room = game.getCurrentRoom();
             System.out.println();
@@ -116,6 +123,10 @@ public class Main
             if (room.checkAnswer(answer))
             {
                 System.out.println("Correct!");
+                game.plusRoomIndex();
+                if(game.getRoomIndex() == game.getRoomPool().size()) {
+                    win = true;
+                }
                 game.nextRoom();
                 if (random.nextInt(3) == 0)
                 {
@@ -128,11 +139,14 @@ public class Main
             }
             else
             {
-                game.loseHeart();
-                System.out.println("Wrong! Lives left: " + game.getHearts());
+                game.loseLife();
+                if(game.getLives() == 0) {
+                    loss = true;
+                }
+                System.out.println("Wrong! Lives left: " + game.getLives());
             }
         }
-        if (game.checkWin())
+        if (win)
         {
             System.out.println("You escaped! You win!");
         }

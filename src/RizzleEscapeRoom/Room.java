@@ -58,4 +58,20 @@ public class Room
     public String[] getAnswers() {
         return answers;
     }
+    
+    // ----------------------------------------------------------
+    /**
+     * Place a description of your method here.
+     * @param answer 
+     * @return boolean
+     */
+    public boolean checkAnswer(String answer) {
+        boolean contains = false;
+        for(int i = 0; i < answers.length; i += 1) {
+            if(answers[i].equals(answer)) {
+                contains = true;
+            }
+        }
+        return contains;
+    }
 }

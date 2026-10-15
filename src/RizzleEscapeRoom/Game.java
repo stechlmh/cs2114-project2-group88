@@ -25,8 +25,6 @@ public class Game
      * Stores introduction to escape room to explain rules and such
      */
     String intro = "[Introduction Message]";
-    String winScreen = "[Win Message]";
-    String loseScreen = "[Lose Message]";
     /**
      * Stores how many lives the player has.
      */
@@ -65,17 +63,13 @@ public class Game
      * @param rooms
      * @param funFacts
      * @param intro
-     * @param winScreen 
-     * @param loseScreen 
      * @param quizType
      * @param lives
      */
-    public Game(LinkedChain<Room> rooms, LinkedChain<FunFact> funFacts, String intro, String winScreen, String loseScreen, int quizType, int lives) {
+    public Game(LinkedChain<Room> rooms, LinkedChain<FunFact> funFacts, String intro, int quizType, int lives) {
         roomPool = rooms;
         funFactPool = funFacts;
         this.intro = intro;
-        this.winScreen = winScreen;
-        this.loseScreen = loseScreen;
         this.quizType = quizType;
         this.lives = lives; 
     }
@@ -93,7 +87,6 @@ public class Game
     public String getIntro() {
         return intro;
     }
-    
     // ----------------------------------------------------------
     /**
      * Returns number of hearts
@@ -111,34 +104,48 @@ public class Game
     }
     // ----------------------------------------------------------
     /**
-     * Moves one room along the linked chain, if final room, win!
+     * Returns roomIndex
+     * @return int
      */
-    public void nextRoom() {
-        roomIndex += 1;
-        currentRoom = roomPool.get(roomIndex);
+    public int getRoomIndex() {
+        return roomIndex;
     }
     // ----------------------------------------------------------
     /**
-     * Returns winScreen
-     * @return String
+     * Returns roomPool
+     * @return LinkedChain<Room>
      */
-    public String getWinScreen() {
-        return winScreen;
+    public LinkedChain<Room> getRoomPool() {
+        return roomPool;
     }
- // ----------------------------------------------------------
+    // ----------------------------------------------------------
     /**
-     * Returns loseScreen
-     * @return String
+     * Returns currentRoom
+     * @return Room
      */
-    public String getLoseScreen() {
-        return loseScreen;
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+    // ----------------------------------------------------------
+    /**
+     * iterates the room index by one
+     */
+    public void plusRoomIndex() {
+        roomIndex += 1;
+    }
+    // ----------------------------------------------------------
+    /**
+     * Moves one room along the linked chain
+     */
+    public void nextRoom() {
+        currentRoom = roomPool.get(roomIndex);
     }
     // ----------------------------------------------------------
     /**
      * Prints a randomFunFact from the list and removes it
      * @return FunFact
      */
-    public FunFact returnRandomFunFact() {
+    public FunFact getRandomFunFact() {
         int randInt = (int) (Math.random()*funFactPool.size());
         FunFact fact = funFactPool.get(randInt);
         funFactPool.remove(funFactPool.get(randInt));
