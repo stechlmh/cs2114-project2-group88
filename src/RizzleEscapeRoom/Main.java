@@ -1,6 +1,7 @@
 package RizzleEscapeRoom;
 
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * Main class for Rizzle Escape Room. Handles player interaction: reading
@@ -91,15 +92,104 @@ public class Main
     }
 
     /**
-     * Starts the program.
+     * Runs one game from the first room until the player wins, loses, or
+     * the input stream closes.
+     *
+     * @param game the game to run
+     * @param scanner the scanner to read answers from
+     */
+    public static void runGame(Game game, Scanner scanner)
+    {
+        Random random = new Random();
+        game.printIntro();
+        while (!game.checkWin() && !game.checkLoss())
+        {
+            Room room = game.getCurrentRoom();
+            System.out.println();
+            System.out.println(room);
+            String answer = getUserInput(scanner);
+            if (answer == null)
+            {
+                System.out.println("Input closed. Goodbye!");
+                return;
+            }
+            if (room.checkAnswer(answer))
+            {
+                System.out.println("Correct!");
+                game.nextRoom();
+                if (random.nextInt(3) == 0)
+                {
+                    FunFact fact = game.getRandomFunFact();
+                    if (fact != null)
+                    {
+                        System.out.println("Fun fact: " + fact);
+                    }
+                }
+            }
+            else
+            {
+                game.loseHeart();
+                System.out.println("Wrong! Lives left: " + game.getHearts());
+            }
+        }
+        if (game.checkWin())
+        {
+            System.out.println("You escaped! You win!");
+        }
+        else
+        {
+            System.out.println("You ran out of lives. Game over.");
+        }
+    }
+
+    /**
+     * Asks the player whether they want to play again. Anything other than
+     * a yes or no gets asked again.
+     *
+     * @param scanner the scanner to read from
+     * @return true if the player wants to replay, false for no or if the
+     *         input stream has closed
+     */
+    public static boolean askReplay(Scanner scanner)
+    {
+        while (true)
+        {
+            System.out.println();
+            System.out.println("Play again? (yes/no)");
+            String answer = getUserInput(scanner);
+            if (answer == null)
+            {
+                return false;
+            }
+            answer = answer.toLowerCase();
+            if (answer.equals("yes") || answer.equals("y"))
+            {
+                return true;
+            }
+            if (answer.equals("no") || answer.equals("n"))
+            {
+                return false;
+            }
+            System.out.println("Please type yes or no.");
+        }
+    }
+
+    /**
+     * Starts the program. Keeps replaying new games until the player says no.
      *
      * @param args command line arguments, not used
      */
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
-        Game game = buildGame();
-        game.printIntro();
+        boolean playing = true;
+        while (playing)
+        {
+            Game game = buildGame();
+            runGame(game, scanner);
+            playing = askReplay(scanner);
+        }
+        System.out.println("Thanks for playing!");
         scanner.close();
     }
 }
