@@ -53,4 +53,11 @@ public class RoomTest extends student.TestCase
         assertFalse(room.checkAnswer(null));
     }
     
+    // ----------------------------------------------------------
+    /**
+     * tests toString
+     */
+    public void testToString() {
+        assertEquals(room.toString(), room.getQuestion());
+    }
 }
