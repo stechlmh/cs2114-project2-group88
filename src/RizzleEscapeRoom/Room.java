@@ -71,13 +71,25 @@ public class Room
         }
         boolean contains = false;
         for(int i = 0; i < answers.length; i += 1) {
+<<<<<<< HEAD
             if(answers[i].toUpperCase().equals(answer.toUpperCase())) {
+=======
+            if(answer != null && answers[i].equalsIgnoreCase(answer.trim())) {
+>>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
                 contains = true;
             }
         }
         return contains;
     }
+<<<<<<< HEAD
     
+=======
+
+    /**
+     * Returns the question text for display.
+     * @return question
+     */
+>>>>>>> e2adbe9b0f508db0e1cb451fe44581d31b0c4046
     public String toString() {
         return question;
     }

@@ -24,7 +24,7 @@ public class FunFact
     {
         if(fact == null)
         {
-            throw new IllegalArgumentException("Fact Cannot be null");
+            throw new IllegalArgumentException("Fact cannot be null");
         }
         
         this.fact = fact;
