@@ -72,6 +72,9 @@ public class Game
         this.intro = intro;
         this.quizType = quizType;
         this.lives = lives; 
+        if (roomPool.size() > 0) {
+            currentRoom = roomPool.get(0);
+        }
     }
     
     //~Public  Methods ........................................................
@@ -94,6 +97,22 @@ public class Game
      */
     public int getLives() {
         return lives;
+    }
+    // ----------------------------------------------------------
+    /**
+     * Checks whether every room has been cleared.
+     * @return true if the room index has reached the end of the chain
+     */
+    public boolean checkWin() {
+        return roomIndex >= roomPool.size();
+    }
+    // ----------------------------------------------------------
+    /**
+     * Checks whether the player has run out of lives.
+     * @return true if no lives remain
+     */
+    public boolean checkLoss() {
+        return lives <= 0;
     }
     // ----------------------------------------------------------
     /**
@@ -138,7 +157,12 @@ public class Game
      * Moves one room along the linked chain
      */
     public void nextRoom() {
-        currentRoom = roomPool.get(roomIndex);
+        if (roomIndex < roomPool.size()) {
+            currentRoom = roomPool.get(roomIndex);
+        }
+        else {
+            currentRoom = null;
+        }
     }
     // ----------------------------------------------------------
     /**
@@ -146,6 +170,9 @@ public class Game
      * @return FunFact
      */
     public FunFact getRandomFunFact() {
+        if (funFactPool.isEmpty()) {
+            return null;
+        }
         int randInt = (int) (Math.random()*funFactPool.size());
         FunFact fact = funFactPool.get(randInt);
         funFactPool.remove(funFactPool.get(randInt));

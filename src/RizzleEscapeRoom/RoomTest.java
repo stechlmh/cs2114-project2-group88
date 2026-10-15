@@ -49,6 +49,7 @@ public class RoomTest extends student.TestCase
     public void testCheckAnswer()
     {
         assertTrue(room.checkAnswer("EIGHTEEN"));
+        assertTrue(room.checkAnswer(" eighteen "));
         assertFalse(room.checkAnswer(null));
     }
     

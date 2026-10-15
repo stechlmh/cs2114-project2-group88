@@ -18,14 +18,6 @@ public class Main
         + "Answer each riddle to move to the next room.\n"
         + "A wrong answer costs a life. Lose them all and you lose.";
     /**
-     * Boolean of whether the player has won yet
-     */
-    public static boolean win = false;
-    /**
-     * Boolean of whether the player has lost yet
-     */
-    public static boolean loss = false;
-    /**
      * Gets one line of input from the player. Blank lines are skipped and
      * the player is asked again, so the caller never has to handle empty
      * input.
@@ -109,7 +101,7 @@ public class Main
     {
         Random random = new Random();
         System.out.print(game.getIntro());
-        while (!win && !loss)
+        while (!game.checkWin() && !game.checkLoss())
         {
             Room room = game.getCurrentRoom();
             System.out.println();
@@ -124,10 +116,9 @@ public class Main
             {
                 System.out.println("Correct!");
                 game.plusRoomIndex();
-                if(game.getRoomIndex() == game.getRoomPool().size()) {
-                    win = true;
+                if (!game.checkWin()) {
+                    game.nextRoom();
                 }
-                game.nextRoom();
                 if (random.nextInt(3) == 0)
                 {
                     FunFact fact = game.getRandomFunFact();
@@ -140,13 +131,10 @@ public class Main
             else
             {
                 game.loseLife();
-                if(game.getLives() == 0) {
-                    loss = true;
-                }
                 System.out.println("Wrong! Lives left: " + game.getLives());
             }
         }
-        if (win)
+        if (game.checkWin())
         {
             System.out.println("You escaped! You win!");
         }

@@ -68,10 +68,18 @@ public class Room
     public boolean checkAnswer(String answer) {
         boolean contains = false;
         for(int i = 0; i < answers.length; i += 1) {
-            if(answers[i].equals(answer)) {
+            if(answer != null && answers[i].equalsIgnoreCase(answer.trim())) {
                 contains = true;
             }
         }
         return contains;
+    }
+
+    /**
+     * Returns the question text for display.
+     * @return question
+     */
+    public String toString() {
+        return question;
     }
 }
