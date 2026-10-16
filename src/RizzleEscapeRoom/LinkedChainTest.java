@@ -84,7 +84,9 @@ public class LinkedChainTest extends student.TestCase
         catch (IllegalArgumentException e){
             assertEquals(e.getMessage(), "Array of length 1 is too small for 3 entries");
         }
-        assertEquals(arr, arrayChain);
+        assertEquals(arr[0], arrayChain[0]);
+        assertEquals(arr[1], arrayChain[1]);
+        assertEquals(arr[2], arrayChain[2]);
     }
     // ----------------------------------------------------------
     /**
