@@ -79,10 +79,10 @@ public class Quiz
     {
         LinkedChain<Room> selectedRooms = selectRooms(category, length, order);
         LinkedChain<FunFact> selectedFacts = copyFacts();
-        String intro = "Welcome to " + name + "!\n"
+        String intro = "\nWelcome to \"" + name + "\"\n"
             + "Answer each question to move to the next room.\n"
-            + (noLivesMode ? "Your score is based on your answers."
-                : "A wrong answer costs a life. Lose them all and you lose.");
+            + (noLivesMode ? "Your score is based on your answers.\n"
+                : "A wrong answer costs a life. Lose them all and you lose.\n");
         return new Game(selectedRooms, selectedFacts, intro, category, lives,
             noLivesMode);
     }

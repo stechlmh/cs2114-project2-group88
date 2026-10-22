@@ -184,18 +184,18 @@ public class Main
      */
     public static Quiz buildCustomQuiz(Scanner scanner)
     {
-        System.out.println("How many questions should the custom quiz have?");
+        System.out.println("\nHow many questions should the custom quiz have?");
         int count = readNumber(scanner, 1, 30, 3);
         LinkedChain<Room> rooms = new LinkedChain<Room>();
         for (int i = 0; i < count; i += 1)
         {
-            System.out.println("Enter question " + (i + 1) + ":");
+            System.out.println("\nEnter question " + (i + 1) + ":");
             String question = getUserInput(scanner);
             if (question == null)
             {
                 return null;
             }
-            System.out.println("Enter accepted answers separated by commas:");
+            System.out.println("\nEnter accepted answers separated by commas:");
             String answerLine = getUserInput(scanner);
             if (answerLine == null)
             {
@@ -213,7 +213,7 @@ public class Main
             }
             while (answers.isEmpty())
             {
-                System.out.println("Enter at least one accepted answer:");
+                System.out.println("\nEnter at least one accepted answer:");
                 answerLine = getUserInput(scanner);
                 if (answerLine == null)
                 {
@@ -229,11 +229,18 @@ public class Main
                     }
                 }
             }
-            System.out.println("Difficulty from 1 (easy) to 5 (hard):");
+            System.out.println("\nDifficulty from 1 (easy) to 5 (hard):");
             int difficulty = readNumber(scanner, 1, 5, 1);
             rooms.addToEnd(new Room(question, answers, Room.RIDDLE, difficulty));
         }
-        return new Quiz("Custom Quiz", rooms, buildFunFacts());
+        System.out.println("\nEnter the name of your quiz:");
+        String name = getUserInput(scanner);
+        if (name == null)
+        {
+            return null;
+        }
+        System.out.println("\nThat name is amazing!");
+        return new Quiz(name, rooms, buildFunFacts());
     }
 
     /**
@@ -255,12 +262,12 @@ public class Main
             String answer = getUserInput(scanner);
             if (answer == null)
             {
-                System.out.println("Input closed. Goodbye!");
+                System.out.println("\nInput closed. Goodbye!");
                 return;
             }
             if (room.checkAnswer(answer))
             {
-                System.out.println("Correct!");
+                System.out.println("\nCorrect!");
                 game.recordAnswer(true);
                 game.plusRoomIndex();
                 if (!game.checkWin()) {
@@ -271,7 +278,7 @@ public class Main
                     FunFact fact = game.getRandomFunFact();
                     if (fact != null)
                     {
-                        System.out.println(fact);
+                        System.out.println("\n" + fact);
                     }
                 }
             }
@@ -281,21 +288,38 @@ public class Main
                 if (!game.isNoLivesMode())
                 {
                     game.loseLife();
-                    System.out.println("Wrong! Lives left: " + game.getLives());
+                    System.out.println("\nWrong! Lives left: " + game.getLives());
                 }
                 else
                 {
-                    System.out.println("Wrong!");
+                    System.out.println("\nIncorrect!");
+                    game.plusRoomIndex();
+                    if (!game.checkWin()) {
+                        game.nextRoom();
+                    }
+                    if (random.nextInt(3) == 0)
+                    {
+                        FunFact fact = game.getRandomFunFact();
+                        if (fact != null)
+                        {
+                            System.out.println("\n" + fact);
+                        }
+                    }
                 }
             }
         }
         if (game.checkWin())
         {
-            System.out.println("You escaped! You win!");
+            if(game.isNoLivesMode()) {
+                System.out.println("\nYou have completed the quiz!");
+            }
+            else{
+                System.out.println("\nYou escaped! You win!");
+            }
         }
         else
         {
-            System.out.println("You ran out of lives. Game over.");
+            System.out.println("\nYou ran out of lives. Game over.");
         }
         if (game.isNoLivesMode())
         {
@@ -313,7 +337,7 @@ public class Main
      */
     public static Game chooseGame(Scanner scanner)
     {
-        System.out.println("Choose a quiz: 1 All, 2 Riddle, 3 Trivia, "
+        System.out.println("\nChoose a quiz: 1 All, 2 Riddle, 3 Trivia, "
             + "4 Math, 5 Troll, 6 Custom");
         int quizChoice = readNumber(scanner, 1, 6, 1);
         Quiz quiz;
@@ -352,12 +376,12 @@ public class Main
         {
             return null;
         }
-        System.out.println("How many rooms? Enter a number or all (1-"
+        System.out.println("\nHow many rooms? Enter a number or all (1-"
             + maximum + "):");
         int length = readLength(scanner, maximum);
-        System.out.println("Order: 1 Sequential, 2 Random, 3 Progressive:");
+        System.out.println("\nOrder: 1 Sequential, 2 Random, 3 Progressive:");
         int order = readNumber(scanner, 1, 3, 1) - 1;
-        System.out.println("Mode: 1 Lives, 2 No lives with percentage score:");
+        System.out.println("\nMode: 1 Lives, 2 No lives with percentage score:");
         boolean noLives = readNumber(scanner, 1, 2, 1) == 2;
         return quiz.createGame(category, length, order, STARTING_LIVES,
             noLives);
@@ -393,7 +417,7 @@ public class Main
             {
                 // The shared message below handles invalid input.
             }
-            System.out.println("Enter a number from " + minimum + " to "
+            System.out.println("\nEnter a number from " + minimum + " to "
                 + maximum + ".");
         }
     }
@@ -425,7 +449,7 @@ public class Main
             {
                 // The shared message below handles invalid input.
             }
-            System.out.println("Enter a room count from 1 to " + maximum
+            System.out.println("\nEnter a room count from 1 to " + maximum
                 + " or all.");
         }
     }
@@ -458,7 +482,7 @@ public class Main
             {
                 return false;
             }
-            System.out.println("Please type yes or no.");
+            System.out.println("\nPlease type yes or no.");
         }
     }
 
@@ -481,7 +505,7 @@ public class Main
             runGame(game, scanner);
             playing = askReplay(scanner);
         }
-        System.out.println("Thanks for playing!");
+        System.out.println("\nThanks for playing!");
         scanner.close();
     }
 }

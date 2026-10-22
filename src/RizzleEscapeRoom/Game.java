@@ -106,7 +106,7 @@ public class Game
     
     //~Public  Methods ........................................................
     public String toString() {
-        return currentRoom.toString();
+        return "\n" + currentRoom.toString();
     }
     
     // ----------------------------------------------------------
