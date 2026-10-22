@@ -61,7 +61,7 @@ public class Main
         addRoom(rooms, "What has hands but cannot clap?",
             Room.RIDDLE, 1, "clock", "a clock");
         addRoom(rooms, "What has a head and a tail but no body?",
-            Room.RIDDLE, 2, "coin", "a coin");
+            Room.RIDDLE, 2, "coin", "a coin", "a doubly-linked list", "doubly-linked list", "a doubly linked list", "doubly linked list", "a doublyLinkedList", "doublyLinkedList", "a doubly-linked chain", "doubly-linked chain", "a doubly linked chain", "doubly linked chain", "a doublyLinkedChain", "doublyLinkedChain", "a DLChain", "DLChain", "DLList", "a DLList");
         addRoom(rooms, "The more you take, the more you leave behind. What are they?",
             Room.RIDDLE, 2, "footsteps", "steps");
         addRoom(rooms, "What has one eye but cannot see?",
