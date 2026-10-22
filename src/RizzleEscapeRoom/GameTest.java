@@ -20,8 +20,14 @@ public class GameTest extends student.TestCase
      */
     public void setUp()
     {
-        first = new Room("First question?", new String[] { "one" }, 0);
-        second = new Room("Second question?", new String[] { "two" }, 0);
+        LinkedChain<String> answers = new LinkedChain<String>();
+        answers.addToEnd("one");
+        answers.addToEnd("1");
+        first = new Room("First question?", answers, 0);
+        answers.clear();
+        answers.addToEnd("one");
+        answers.addToEnd("1");
+        second = new Room("Second question?", answers, 0);
         rooms = new LinkedChain<Room>();
         rooms.addToEnd(first);
         rooms.addToEnd(second);
@@ -111,5 +117,14 @@ public class GameTest extends student.TestCase
     {
         game.getRandomFunFact();
         assertNull(game.getRandomFunFact());
+    }
+    
+    /**
+     * Bad-input case: an empty fact chain returns null.
+     */
+    public void testToString()
+    {
+        
+        assertEquals(game.getCurrentRoom().toString(), game.toString());
     }
 }

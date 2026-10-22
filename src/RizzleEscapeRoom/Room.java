@@ -18,7 +18,7 @@ public class Room
     /**
      * Stores the answers to the question
      */
-    String[] answers;
+    LinkedChain<String> answers;
     /**
      * Stores data for the case where a room needs to be displayed in a 
      * different format for toString()
@@ -36,7 +36,7 @@ public class Room
      * @param answers
      * @param questionType
      */
-    public Room(String question, String[] answers, int questionType) {
+    public Room(String question, LinkedChain<String> answers, int questionType) {
         this.question = question;
         this.answers = answers;
         this.questionType = questionType;
@@ -53,9 +53,9 @@ public class Room
     
     /**
      * Returns the acceptable answers
-     * @return String[]
+     * @return LinkedChain<String>
      */
-    public String[] getAnswers() {
+    public LinkedChain<String> getAnswers() {
         return answers;
     }
     
@@ -67,8 +67,8 @@ public class Room
      */
     public boolean checkAnswer(String answer) {
         boolean contains = false;
-        for(int i = 0; i < answers.length; i += 1) {
-            if(answer != null && answers[i].equalsIgnoreCase(answer.trim())) {
+        for(int i = 0; i < answers.size(); i += 1) {
+            if(answer != null && answers.get(i).equalsIgnoreCase(answer.trim())) {
                 contains = true;
             }
         }

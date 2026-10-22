@@ -57,12 +57,37 @@ public class Main
     public static LinkedChain<Room> buildRooms()
     {
         LinkedChain<Room> rooms = new LinkedChain<Room>();
+        LinkedChain<String> answers = new LinkedChain<String>();
+        answers.addToEnd("piano");
+        answers.addToEnd("a piano");
+        answers.addToEnd("keyboard");
+        answers.addToEnd("a keyboard");
         rooms.addToEnd(new Room("What has keys but can't open locks?",
-            new String[] { "piano", "a piano", "keyboard" }, 0));
+            answers, 0));
+        LinkedChain<String> answers2 = new LinkedChain<String>();
+        answers2.addToEnd("towel");
+        answers2.addToEnd("a towel");
+        answers2.addToEnd("keyboard");
+        answers2.addToEnd("a keyboard");
         rooms.addToEnd(new Room("What gets wetter the more it dries?",
-            new String[] { "towel", "a towel" }, 0));
+            answers2, 0));
+        LinkedChain<String> answers3 = new LinkedChain<String>();
+        answers3.addToEnd("12");
+        answers3.addToEnd("twelve");
+        answers3.addToEnd("all");
+        answers3.addToEnd("all of them");
         rooms.addToEnd(new Room("How many months have 28 days?",
-            new String[] { "12", "twelve", "all of them" }, 0));
+            answers3, 0));
+        LinkedChain<String> answers4 = new LinkedChain<String>();
+        answers4.addToEnd("newspaper");
+        answers4.addToEnd("a newspaper");
+        rooms.addToEnd(new Room("What's black, white, and red all over?",
+            answers4, 0));
+        LinkedChain<String> answers5 = new LinkedChain<String>();
+        answers5.addToEnd("m");
+        answers5.addToEnd("the letter m");
+        rooms.addToEnd(new Room("What comes once in a minute, twice in a moment, but never in a thousand years?",
+            answers4, 0));
         return rooms;
     }
 

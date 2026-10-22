@@ -15,11 +15,12 @@ public class RoomTest extends student.TestCase
     /**
      * array of possible correct answers
      */
-    String[] answers = {"18", "Eighteen"};
-    
+    LinkedChain<String> answers = new LinkedChain<String>();
     
     public void setUp()
     {
+        answers.addToEnd("18");
+        answers.addToEnd("Eighteen");
         room = new Room("How old are you?", answers, 0);
     }
     
