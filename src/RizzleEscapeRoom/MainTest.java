@@ -19,6 +19,7 @@ public class MainTest extends TestCase
         assertNotNull(game.getCurrentRoom());
         assertEquals("What has keys but can't open locks?",
             game.getCurrentRoom().getQuestion());
+        assertEquals(27, game.getRoomPool().size());
     }
 
     /**
@@ -46,7 +47,12 @@ public class MainTest extends TestCase
      */
     public void testRunGameWins()
     {
-        Game game = Main.buildGame();
+        LinkedChain<Room> rooms = new LinkedChain<Room>();
+        rooms.addToEnd(new Room("First?", new String[] { "piano" }, 0));
+        rooms.addToEnd(new Room("Second?", new String[] { "towel" }, 0));
+        rooms.addToEnd(new Room("Third?", new String[] { "12" }, 0));
+        Game game = new Game(rooms, new LinkedChain<FunFact>(), "Welcome!",
+            0, 3);
         Scanner scanner = new Scanner("piano\ntowel\n12\n");
         Main.runGame(game, scanner);
         assertTrue(game.checkWin());
@@ -60,7 +66,10 @@ public class MainTest extends TestCase
      */
     public void testRunGameLoses()
     {
-        Game game = Main.buildGame();
+        LinkedChain<Room> rooms = new LinkedChain<Room>();
+        rooms.addToEnd(new Room("First?", new String[] { "yes" }, 0));
+        Game game = new Game(rooms, new LinkedChain<FunFact>(), "Welcome!",
+            0, 3);
         Scanner scanner = new Scanner("wrong\nwrong\nwrong\n");
         Main.runGame(game, scanner);
         assertTrue(game.checkLoss());

@@ -20,14 +20,14 @@ public class GameTest extends student.TestCase
      */
     public void setUp()
     {
-        LinkedChain<String> answers = new LinkedChain<String>();
-        answers.addToEnd("one");
-        answers.addToEnd("1");
-        first = new Room("First question?", answers, 0);
-        answers.clear();
-        answers.addToEnd("one");
-        answers.addToEnd("1");
-        second = new Room("Second question?", answers, 0);
+        LinkedChain<String> firstAnswers = new LinkedChain<String>();
+        firstAnswers.addToEnd("one");
+        firstAnswers.addToEnd("1");
+        first = new Room("First question?", firstAnswers, 0);
+        LinkedChain<String> secondAnswers = new LinkedChain<String>();
+        secondAnswers.addToEnd("two");
+        secondAnswers.addToEnd("2");
+        second = new Room("Second question?", secondAnswers, 0);
         rooms = new LinkedChain<Room>();
         rooms.addToEnd(first);
         rooms.addToEnd(second);
@@ -118,13 +118,28 @@ public class GameTest extends student.TestCase
         game.getRandomFunFact();
         assertNull(game.getRandomFunFact());
     }
-    
     /**
-     * Bad-input case: an empty fact chain returns null.
+     * Checks that Game displays its current room.
      */
     public void testToString()
     {
-        
         assertEquals(game.getCurrentRoom().toString(), game.toString());
+    }
+
+    /**
+     * Checks score tracking and rounded percentage in score mode.
+     */
+    public void testScoreMode()
+    {
+        Game scoreGame = new Game(rooms, facts, "Welcome!", 0, 3, true);
+        scoreGame.recordAnswer(true);
+        scoreGame.recordAnswer(false);
+        assertEquals(2, scoreGame.getAnsweredQuestions());
+        assertEquals(1, scoreGame.getCorrectAnswers());
+        assertEquals(50, scoreGame.getPercentageCorrect());
+        scoreGame.loseLife();
+        scoreGame.loseLife();
+        scoreGame.loseLife();
+        assertFalse(scoreGame.checkLoss());
     }
 }

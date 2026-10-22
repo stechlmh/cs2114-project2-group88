@@ -66,5 +66,17 @@ public class FunFactTest extends student.TestCase
    {
        assertEquals("An octopus has 3 hearts", fact.toString());
    }
+
+   /**
+    * Checks hint and troll facts display their formats.
+    */
+   public void testQuestionTypes()
+   {
+       FunFact hint = new FunFact("Look closely.", FunFact.HINT);
+       FunFact troll = new FunFact("This may be a trick.", FunFact.TROLL);
+       assertEquals("Hint: Look closely.", hint.toString());
+       assertEquals("Troll fact: This may be a trick.", troll.toString());
+       assertEquals(FunFact.HINT, hint.getQuestionType());
+   }
    
 }

@@ -40,7 +40,9 @@ public class RoomTest extends student.TestCase
      */
     public void testGetAnswers()
     {
-        assertEquals(answers, room.getAnswers());
+        assertEquals(answers.size(), room.getAnswers().size());
+        assertEquals(answers.get(0), room.getAnswers().get(0));
+        assertEquals(answers.get(1), room.getAnswers().get(1));
     }
     
     
@@ -59,6 +61,6 @@ public class RoomTest extends student.TestCase
      * tests toString
      */
     public void testToString() {
-        assertEquals(room.toString(), room.getQuestion());
+        assertEquals("[Riddle] " + room.getQuestion(), room.toString());
     }
 }

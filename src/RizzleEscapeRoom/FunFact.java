@@ -9,8 +9,10 @@ package RizzleEscapeRoom;
  */
 public class FunFact
 {
+    public static final int FACT = 0;
+    public static final int HINT = 1;
+    public static final int TROLL = 2;
     private String fact;
-    @SuppressWarnings("unused")
     private int questionType;
     
     
@@ -41,6 +43,15 @@ public class FunFact
     {
         return fact;
     }
+
+    /**
+     * returns the format type of this fact
+     * @return questionType
+     */
+    public int getQuestionType()
+    {
+        return questionType;
+    }
     
     
     /**
@@ -59,6 +70,14 @@ public class FunFact
      */
     public String toString()
     {
+        if(questionType == HINT)
+        {
+            return "Hint: " + fact;
+        }
+        if(questionType == TROLL)
+        {
+            return "Troll fact: " + fact;
+        }
         return fact;
     }
 }

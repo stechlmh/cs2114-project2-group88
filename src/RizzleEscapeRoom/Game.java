@@ -30,6 +30,18 @@ public class Game
      */
     int lives;
     /**
+     * Stores the number of questions answered correctly.
+     */
+    int correctAnswers;
+    /**
+     * Stores the number of questions answered.
+     */
+    int answeredQuestions;
+    /**
+     * Stores whether this game uses score mode without lives.
+     */
+    boolean noLivesMode;
+    /**
      * Stores how many lives the player has.
      */
     int quizType;
@@ -67,11 +79,26 @@ public class Game
      * @param lives
      */
     public Game(LinkedChain<Room> rooms, LinkedChain<FunFact> funFacts, String intro, int quizType, int lives) {
+        this(rooms, funFacts, intro, quizType, lives, false);
+    }
+
+    /**
+     * Creates a new game with optional score mode.
+     * @param rooms
+     * @param funFacts
+     * @param intro
+     * @param quizType
+     * @param lives
+     * @param noLivesMode
+     */
+    public Game(LinkedChain<Room> rooms, LinkedChain<FunFact> funFacts,
+        String intro, int quizType, int lives, boolean noLivesMode) {
         roomPool = rooms;
         funFactPool = funFacts;
         this.intro = intro;
         this.quizType = quizType;
         this.lives = lives; 
+        this.noLivesMode = noLivesMode;
         if (roomPool.size() > 0) {
             currentRoom = roomPool.get(0);
         }
@@ -112,7 +139,54 @@ public class Game
      * @return true if no lives remain
      */
     public boolean checkLoss() {
-        return lives <= 0;
+        return !noLivesMode && lives <= 0;
+    }
+    // ----------------------------------------------------------
+    /**
+     * Records whether the latest answer was correct.
+     * @param correct true if the answer was correct
+     */
+    public void recordAnswer(boolean correct) {
+        answeredQuestions += 1;
+        if (correct) {
+            correctAnswers += 1;
+        }
+    }
+    // ----------------------------------------------------------
+    /**
+     * Returns the number of correct answers.
+     * @return correctAnswers
+     */
+    public int getCorrectAnswers() {
+        return correctAnswers;
+    }
+    // ----------------------------------------------------------
+    /**
+     * Returns the number of answers submitted.
+     * @return answeredQuestions
+     */
+    public int getAnsweredQuestions() {
+        return answeredQuestions;
+    }
+    // ----------------------------------------------------------
+    /**
+     * Returns the percentage of questions answered correctly, rounded to
+     * the nearest whole percent.
+     * @return percentage correct
+     */
+    public int getPercentageCorrect() {
+        if (answeredQuestions == 0) {
+            return 0;
+        }
+        return (int)Math.round(correctAnswers * 100.0 / answeredQuestions);
+    }
+    // ----------------------------------------------------------
+    /**
+     * Returns whether the game is running without lives.
+     * @return true when score mode is enabled
+     */
+    public boolean isNoLivesMode() {
+        return noLivesMode;
     }
     // ----------------------------------------------------------
     /**
@@ -170,9 +244,6 @@ public class Game
      * @return FunFact
      */
     public FunFact getRandomFunFact() {
-        if(funFactPool.size() == 0) {
-            return null;
-        }
         if (funFactPool.isEmpty()) {
             return null;
         }
